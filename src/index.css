@@ -1,0 +1,38 @@
+@import "tailwindcss";
+@import "./styles/tokens.css";
+@import "./styles/editorial.css";
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Project rule: NEVER show a scrollbar. Scrolling works; the bar is always hidden. */
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+#root { min-height: 100vh; }
+
+/* Every grid/flex child defaults to min-width:0. Without this a long unbroken
+   string (a handle, a fee, a URL) forces its track wider than the viewport and
+   the whole page scrolls sideways on a phone — the blow-out this guard prevents. */
+:where(.grid, [class*="grid"], .flex, [class*="row"]) > * { min-width: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
