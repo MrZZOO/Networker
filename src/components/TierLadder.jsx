@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Asterisk from './common/Asterisk.jsx'
 import RevealOnScroll from './common/RevealOnScroll.jsx'
 import { TIERS } from '../lib/tiers.js'
@@ -29,6 +30,11 @@ function BandFee({ tierId }) {
 }
 
 export default function TierLadder() {
+  /* The ladder is a selectable set: clicking a rung fills it ink and clears the
+     others. Open starts selected because "some of this is free" is the most
+     disarming thing the product says and deserves the focal position on load. */
+  const [active, setActive] = useState(TIERS.find((t) => t.focal)?.id ?? TIERS[0].id)
+
   return (
     <section className="section" id="tiers">
       <RevealOnScroll>
@@ -47,11 +53,17 @@ export default function TierLadder() {
 
         <div className="tier-grid">
           {TIERS.map((t) => (
-            <div className={`tier-card ${t.focal ? 'tier-card--focal' : ''}`} key={t.id}>
+            <button
+              type="button"
+              className={`tier-card ${active === t.id ? 'is-active' : ''}`}
+              key={t.id}
+              onClick={() => setActive(t.id)}
+              aria-pressed={active === t.id}
+            >
               <span className="tier-card__label">{t.label}</span>
               <p className="tier-card__who">{t.who}</p>
               <BandFee tierId={t.id} />
-            </div>
+            </button>
           ))}
         </div>
       </RevealOnScroll>

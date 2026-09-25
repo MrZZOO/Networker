@@ -567,8 +567,11 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
 }
+/* A <button>, so it is keyboard-reachable and announces its pressed state — hence
+   the font/border/align resets a button needs to stop looking like one. */
 .tier-card {
   background: var(--card);
+  border: none;
   border-radius: var(--radius-card);
   padding: 26px 22px;
   display: flex;
@@ -576,7 +579,14 @@
   gap: 12px;
   min-height: 210px;
   min-width: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease),
+    transform 0.35s var(--ease);
 }
+.tier-card:hover { transform: translateY(-3px); }
+.tier-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .tier-card__label {
   font-family: var(--font-display);
   font-weight: 800;
@@ -588,11 +598,11 @@
 .tier-card__fee { margin-top: auto; }
 .tier-card__fee--num { font-family: var(--font-mono); font-size: 15px; font-variant-numeric: tabular-nums; }
 
-/* "Some of this is free" is the most disarming thing the product can say, so the
-   Open tier gets the focal ink fill. */
-.tier-card--focal { background: var(--ink); color: var(--card); }
-.tier-card--focal .tier-card__who { color: var(--on-wash-2); }
-.tier-card--focal .tier-card__fee { color: var(--on-wash-3); }
+/* The selected rung. Open starts selected — "some of this is free" is the most
+   disarming thing the product can say, so it holds the focal position on load. */
+.tier-card.is-active { background: var(--ink); color: var(--card); }
+.tier-card.is-active .tier-card__who { color: var(--on-wash-2); }
+.tier-card.is-active .tier-card__fee { color: var(--on-wash-3); }
 
 /* ── Steps ─────────────────────────────────────────────────────────────────── */
 .steps {
