@@ -467,7 +467,7 @@
   box-shadow: var(--shadow-card);
 }
 
-.feat-row { position: relative; padding: 22px 0; border-bottom: 1px solid var(--hairline); }
+.feat-row { padding: 22px 0; border-bottom: 1px solid var(--hairline); }
 .feat-row:last-child { border-bottom: none; }
 .feat-row__title {
   display: flex;
@@ -483,14 +483,6 @@
 }
 .feat-row__body { margin-top: 9px; font-size: var(--text-small); color: var(--ink-2); max-width: 46ch; }
 
-.feat-row--photo { padding-right: 190px; }
-.feat-row__card {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 168px;
-}
 
 .band__right { display: flex; flex-direction: column; align-items: flex-start; }
 .band__title {
@@ -881,8 +873,6 @@
 }
 
 @media (max-width: 720px) {
-  .feat-row--photo { padding-right: 0; }
-  .feat-row__card { position: static; transform: none; width: 100%; margin-top: 16px; }
   .tier-grid { grid-template-columns: minmax(0, 1fr); }
   .tier-card { min-height: auto; }
   /* Single column: the vertical rail has nothing to divide, and a horizontal one

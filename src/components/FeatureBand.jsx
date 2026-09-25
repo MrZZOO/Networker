@@ -17,31 +17,26 @@ const MECHANICS = [
     id: 'rooms',
     title: 'List the rooms you are already in',
     body: 'Name the networks you can genuinely reach, how you know them, and what an introduction from you actually gets someone.',
-    floatPhoto: false,
   },
   {
     id: 'price',
     title: 'Price the door, or leave it open',
     body: 'Every network on your ladder carries its own fee. Some of yours can be free. None of it is set by us.',
-    floatPhoto: true,
   },
   {
     id: 'qualified',
     title: 'Every request arrives pre-qualified',
     body: 'A fee attached to a request is a filter on who bothers sending one. Take the ones worth taking; the rest refund themselves.',
-    floatPhoto: false,
   },
   {
     id: 'channels',
     title: 'Four channels, you choose which are open',
     body: 'LinkedIn, X, Telegram, or in person — set per network, so a warm room stays warm.',
-    floatPhoto: false,
   },
   {
     id: 'field',
     title: 'Open to any field',
     body: 'The mechanism does not care what industry you are in. If you can reach people worth reaching, you can list.',
-    floatPhoto: false,
   },
 ]
 
@@ -75,24 +70,13 @@ export default function FeatureBand() {
     <section className="section" id="networks">
       <RevealOnScroll className="band">
         <div className="band__left">
-          {MECHANICS.map((m, i) => (
-            <div className={`feat-row ${m.floatPhoto ? 'feat-row--photo' : ''}`} key={m.id}>
+          {MECHANICS.map((m) => (
+            <div className="feat-row" key={m.id}>
               <h3 className="feat-row__title">
                 <Asterisk size={12} />
                 {m.title}
               </h3>
               <p className="feat-row__body">{m.body}</p>
-              {m.floatPhoto && (
-                /* The gallery takes the first three; this one takes a fourth if
-                   there ever is one, so supplying exactly three fills the gallery
-                   rather than leaving its last card as a plate. */
-                <PhotoCard
-                  className="feat-row__card"
-                  src={images[3] ?? null}
-                  seed={11 + i}
-                  ratio="5 / 4"
-                />
-              )}
             </div>
           ))}
         </div>

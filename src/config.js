@@ -98,11 +98,11 @@ export const CONFIG = {
   // The circular inset: the same photo, cropped tight on the gap between the two
   // fingertips. The near-touch magnified is the whole product in one detail.
   HERO_INSET_IMAGE: '/hero.jpg',
-  // The three gallery cards in the feature band. Uncaptioned by design — they
-  // illustrate the KINDS of network the product is about, they do not claim to be
-  // anyone's listing. A fourth entry, if added, fills the small floating card in
-  // the mechanics list. All free under the Unsplash License.
-  // [] → every small photo card falls back to NetworkPlate.
+  // The three gallery cards in the feature band — the only photo slots left, and
+  // exactly three are used. Uncaptioned by design: they illustrate the KINDS of
+  // network the product is about, they do not claim to be anyone's listing.
+  // All free under the Unsplash License.
+  // [] → the cards fall back to NetworkPlate.
   FEATURE_IMAGES: [
     '/person-vc.jpg',     // suited professional — the VC / KOL end
     '/person-legal.jpg',  // formal suit — the legal / advisory end
