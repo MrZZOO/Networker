@@ -608,11 +608,37 @@
 .steps {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
+  gap: 6px;
   list-style: none;
 }
-.step { padding: 26px 26px 26px 0; border-left: 1px solid var(--hairline); padding-left: 24px; min-width: 0; }
-.step:first-child { border-left: none; padding-left: 0; }
+.step { min-width: 0; display: flex; }
+
+/* The hairline rail lives on the button, not the <li>, so it can disappear under
+   the ink fill instead of running alongside it. */
+.step__btn {
+  flex: 1;
+  min-width: 0;
+  /* A <button> centres its content vertically by default, which left the four
+     step numbers sitting at four different heights. Explicit column flex
+     top-aligns them. */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  font: inherit;
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  padding: 26px 22px;
+  cursor: pointer;
+  transition: background 0.35s var(--ease), color 0.35s var(--ease),
+    border-color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.step:first-child .step__btn { border-left-color: transparent; }
+.step__btn:hover { transform: translateY(-3px); }
+.step__btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
 .step__n { display: block; margin-bottom: 14px; }
 .step__title {
   font-family: var(--font-display);
@@ -624,6 +650,18 @@
 }
 .step__body { margin-top: 10px; font-size: var(--text-small); color: var(--ink-2); }
 .step__note { display: inline-block; margin-top: 14px; color: var(--accept); }
+
+/* The selected step, matching the tier ladder's ink fill. */
+.step__btn.is-active {
+  background: var(--ink);
+  border-left-color: transparent;
+}
+.step__btn.is-active .step__title { color: var(--card); }
+.step__btn.is-active .step__body { color: var(--on-wash-2); }
+.step__btn.is-active .step__n { color: var(--on-wash-3); }
+/* The refund note is green on paper, which goes muddy on ink — lift it to a tint
+   that holds contrast against black rather than keeping the same hex. */
+.step__btn.is-active .step__note { color: #6FD3A6; }
 
 /* ── Listing card ──────────────────────────────────────────────────────────── */
 .listing-grid {
@@ -799,7 +837,8 @@
 @media (max-width: 1100px) {
   .tier-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .step:nth-child(3) { border-left: none; padding-left: 0; }
+  /* Step 3 starts a new row here, so it is a first-in-row and loses its rail. */
+  .step:nth-child(3) .step__btn { border-left-color: transparent; }
 }
 
 @media (max-width: 980px) {
@@ -837,9 +876,10 @@
   .feat-row__card { position: static; transform: none; width: 100%; margin-top: 16px; }
   .tier-grid { grid-template-columns: minmax(0, 1fr); }
   .tier-card { min-height: auto; }
+  /* Single column: the vertical rail has nothing to divide, and a horizontal one
+     would have to vanish under every ink fill. The gap carries the separation. */
   .steps { grid-template-columns: minmax(0, 1fr); }
-  .step { border-left: none; padding-left: 0; border-top: 1px solid var(--hairline); }
-  .step:first-child { border-top: none; }
+  .step__btn { border-left-color: transparent; padding: 22px; }
   .footer__cols { gap: 36px; }
 }
 

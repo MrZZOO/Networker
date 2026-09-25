@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Asterisk from './common/Asterisk.jsx'
 import RevealOnScroll from './common/RevealOnScroll.jsx'
 import { CONFIG } from '../config.js'
@@ -37,6 +38,12 @@ const STEPS = [
 export default function HowItWorks() {
   const showRefund = CONFIG.REFUND_ON_REFUSE === true
 
+  /* Unlike the tier ladder this is a SEQUENCE, not a pick-one — so selecting a
+     step reads as walking the flow rather than choosing between options. Starts
+     on 01 for the same reason the ladder starts on Open: the section should look
+     settled at rest, not blank. */
+  const [active, setActive] = useState(STEPS[0].n)
+
   return (
     <section className="section" id="how">
       <RevealOnScroll>
@@ -49,15 +56,24 @@ export default function HowItWorks() {
           </h2>
         </div>
 
+        {/* Still an <ol> — the order is meaningful, and it stays meaningful to a
+            screen reader whatever the styling does. */}
         <ol className="steps">
           {STEPS.map((s) => (
             <li className="step" key={s.n}>
-              <span className="step__n label">{s.n}</span>
-              <h3 className="step__title">{s.title}</h3>
-              <p className="step__body">{s.body}</p>
-              {showRefund && s.refundNote && (
-                <span className="step__note label">{s.refundNote}</span>
-              )}
+              <button
+                type="button"
+                className={`step__btn ${active === s.n ? 'is-active' : ''}`}
+                onClick={() => setActive(s.n)}
+                aria-pressed={active === s.n}
+              >
+                <span className="step__n label">{s.n}</span>
+                <h3 className="step__title">{s.title}</h3>
+                <p className="step__body">{s.body}</p>
+                {showRefund && s.refundNote && (
+                  <span className="step__note label">{s.refundNote}</span>
+                )}
+              </button>
             </li>
           ))}
         </ol>
