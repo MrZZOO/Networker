@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Asterisk from './common/Asterisk.jsx'
 import Pill from './common/Pill.jsx'
 import PhotoCard from './common/PhotoCard.jsx'
@@ -45,9 +45,31 @@ const MECHANICS = [
   },
 ]
 
+const GALLERY_SLOTS = 3
+/* Derived once so the dots, the cards and the cycle can never disagree. */
+const SLOTS = Array.from({ length: GALLERY_SLOTS }, (_, i) => i)
+const CYCLE_MS = 2000
+
 export default function FeatureBand() {
   const [active, setActive] = useState(0)
   const images = CONFIG.FEATURE_IMAGES ?? []
+
+  /* The dots promise a carousel, so it has to actually move — otherwise they read
+     as broken controls.
+
+     setTimeout keyed on `active` rather than a standing setInterval: each manual
+     click restarts the clock, so clicking a dot does not get yanked onward a
+     fraction of a second later by a timer that was already most of the way
+     through its tick.
+
+     Skipped entirely under prefers-reduced-motion. Content that moves on its own
+     is exactly what that setting is asking us not to do, and the dots still work
+     by hand. */
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    const id = setTimeout(() => setActive((a) => (a + 1) % GALLERY_SLOTS), CYCLE_MS)
+    return () => clearTimeout(id)
+  }, [active])
 
   return (
     <section className="section" id="networks">
@@ -61,9 +83,12 @@ export default function FeatureBand() {
               </h3>
               <p className="feat-row__body">{m.body}</p>
               {m.floatPhoto && (
+                /* The gallery takes the first three; this one takes a fourth if
+                   there ever is one, so supplying exactly three fills the gallery
+                   rather than leaving its last card as a plate. */
                 <PhotoCard
                   className="feat-row__card"
-                  src={images[0] ?? null}
+                  src={images[3] ?? null}
                   seed={11 + i}
                   ratio="5 / 4"
                 />
@@ -86,13 +111,13 @@ export default function FeatureBand() {
 
           <div className="band__gallery">
             <div className="band__dots" role="tablist" aria-label="Gallery">
-              {[0, 1, 2].map((i) => (
+              {SLOTS.map((i) => (
                 <button
                   key={i}
                   type="button"
                   role="tab"
                   aria-selected={active === i}
-                  aria-label={`View ${i + 1} of 3`}
+                  aria-label={`View ${i + 1} of ${GALLERY_SLOTS}`}
                   className={`band__dot ${active === i ? 'is-active' : ''}`}
                   onClick={() => setActive(i)}
                 />
@@ -100,11 +125,11 @@ export default function FeatureBand() {
             </div>
 
             <div className="band__cards">
-              {[0, 1, 2].map((i) => (
+              {SLOTS.map((i) => (
                 <PhotoCard
                   key={i}
                   className={`band__card ${active === i ? 'is-active' : ''}`}
-                  src={images[i + 1] ?? null}
+                  src={images[i] ?? null}
                   seed={21 + i}
                   ratio="3 / 4"
                 />

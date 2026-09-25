@@ -73,8 +73,22 @@ export const CONFIG = {
   MECHANIC_LINE: 'INTRODUCTIONS AT YOUR DISCRETION',
 
   // ── Imagery ────────────────────────────────────────────────────────────────
-  // No stock photos of people, ever: a stock face beside a network tier reads as a
-  // listing, which makes it a fabricated person.
+  // THE RULE ABOUT PHOTOS OF PEOPLE, stated precisely. An earlier draft said
+  // "never", which was too blunt — it would have banned ordinary brand photography
+  // along with the thing actually worth banning.
+  //
+  //   BANNED: a face anywhere that implies a real USER. The proof pill's avatar
+  //   stack, a ListingCard avatar, a testimonial. Those assert that a specific
+  //   person is on this platform, and with zero listings that is a fabrication.
+  //   Those slots keep their dashed vacancy rings and initials. Leave them alone.
+  //
+  //   ALLOWED: decorative brand photography that carries no claim — the hero, and
+  //   the feature gallery below. The reference design does exactly this.
+  //
+  //   THE LINE BETWEEN THEM: the moment one of these is captioned with a name, a
+  //   role, a fee, or anything like "our members", it becomes the banned kind.
+  //   Never caption them.
+  //
   // null → <NetworkPlate/> draws a procedural blue-wash node graph instead.
   // Two hands reaching, not touching — the Creation of Adam composition Dean asked
   // for. Photo by Elijah Grimm, free under the Unsplash License (no attribution
@@ -84,7 +98,16 @@ export const CONFIG = {
   // The circular inset: the same photo, cropped tight on the gap between the two
   // fingertips. The near-touch magnified is the whole product in one detail.
   HERO_INSET_IMAGE: '/hero.jpg',
-  FEATURE_IMAGES: [],       // [] → every small photo card falls back to NetworkPlate
+  // The three gallery cards in the feature band. Uncaptioned by design — they
+  // illustrate the KINDS of network the product is about, they do not claim to be
+  // anyone's listing. A fourth entry, if added, fills the small floating card in
+  // the mechanics list. All free under the Unsplash License.
+  // [] → every small photo card falls back to NetworkPlate.
+  FEATURE_IMAGES: [
+    '/person-vc.jpg',     // suited professional — the VC / KOL end
+    '/person-legal.jpg',  // formal suit — the legal / advisory end
+    '/person-angel.jpg',  // blazer, no tie — the modern angel / operator end
+  ],
 
   // ── Intake ─────────────────────────────────────────────────────────────────
   // Where a would-be lister actually goes. In v1 there is no form, because a form

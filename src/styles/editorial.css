@@ -200,16 +200,19 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: var(--wash-sat);
+  /* Subjects are shot full-body; a 3:4 card centred on them puts the face in the
+     top sliver and a lot of trousers everywhere else. Bias the crop upward. */
+  object-position: 50% 22%;
+  filter: var(--wash-sat-portrait);
 }
-/* Same duotone as the hero, so a feature photo and the hero photo read as one
-   treatment rather than two different sites. */
+/* The hero's duotone, dialled back. At the hero's strength a face goes grey and
+   lifeless — the tint should say "same family as the hero", not "monochrome". */
 .photo-card__veil {
   position: absolute;
   inset: 0;
   background: var(--wash-mid);
   mix-blend-mode: color;
-  opacity: 0.72;
+  opacity: 0.4;
 }
 
 /* ── Hero ──────────────────────────────────────────────────────────────────── */
@@ -516,8 +519,14 @@
 .band__dot.is-active { background: var(--ink); border-color: var(--ink); }
 
 .band__cards { display: flex; gap: 12px; flex: 1; min-width: 0; }
-.band__card { flex: 1; min-width: 0; opacity: 0.5; transition: opacity 0.4s var(--ease); }
+/* 0.5 was fine when these were abstract plates; with faces in them that much
+   dimming reads as a loading failure rather than a de-emphasis. */
+.band__card { flex: 1; min-width: 0; opacity: 0.82; transition: opacity 0.4s var(--ease); }
 .band__card.is-active { opacity: 1; }
+/* These sources are full-body, and object-fit alone only trims ~11% of the height
+   going from 2:3 to 3:4 — so the subject stays distant and the face ends up tiny
+   at this card size. Scale past what cover can reach and bias upward. */
+.band__card .photo-card__img { transform: scale(1.34); object-position: 50% 16%; }
 
 /* ── Network grid + channels ───────────────────────────────────────────────── */
 .netgrid {

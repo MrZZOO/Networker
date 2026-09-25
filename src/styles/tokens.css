@@ -34,6 +34,10 @@
      dusk sky, which sits far darker than the bright-daylight reference, and
      desaturating alone leaves it muddy rather than airy. */
   --wash-sat:     saturate(0.28) brightness(1.24) contrast(0.96);
+  /* A gentler grade for photographs of people. The hero treatment is tuned for a
+     sky, where crushing saturation reads as atmosphere; on a face it reads as
+     ill. Keeps enough colour for skin to look like skin. */
+  --wash-sat-portrait: saturate(0.62) brightness(1.06) contrast(1.02);
 
   /* State — restrained; this palette earns its calm */
   --accept:       #1E6B4C;
