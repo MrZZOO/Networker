@@ -182,9 +182,17 @@
   flex-direction: column;
   gap: 16px;
 }
+/* A <legend> straddles the fieldset's top border by default, so the label sat
+   ON the border line with the rule running through the text. `float: left` takes
+   it out of that special layout and makes it an ordinary block inside the
+   padding, leaving the border to draw unbroken. The width:100% is what forces
+   the following content onto a new line once it is floated. */
 .offerfields__legend {
+  float: left;
+  width: 100%;
   padding: 0;
-  display: inline-flex;
+  margin-bottom: 4px;
+  display: flex;
   align-items: center;
   gap: 7px;
   font-family: var(--font-mono);
@@ -252,6 +260,47 @@ select.field__input option { background: var(--panel); color: var(--text); }
 .toggle:hover { border-color: var(--cyan); color: var(--text); }
 .toggle.is-on { background: var(--cyan); border-color: var(--cyan); color: #06060F; font-weight: 600; }
 
+/* ── Contacts — the named people behind a network ───────────────────────── */
+.contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.contacts__head { display: flex; flex-direction: column; gap: 4px; }
+.contact {
+  position: relative;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: rgba(6, 6, 15, 0.35);
+}
+/* Name and role take the width; the intro level is the narrow decision. */
+.contact__grid { display: grid; grid-template-columns: 1.1fr 1.3fr 1fr; gap: 12px; }
+.contact__grid > * { min-width: 0; }
+.contact__remove {
+  position: absolute;
+  top: -9px;
+  right: 10px;
+  padding: 2px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--panel);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.contact__remove:hover { color: var(--rose); border-color: rgba(242, 112, 138, 0.4); }
+.contacts__add { align-self: flex-start; }
+
+@media (max-width: 760px) {
+  .contact__grid { grid-template-columns: minmax(0, 1fr); }
+}
+
 .form__add { align-self: flex-start; }
 .form__foot { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 6px; }
 .form__errcount { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); }
@@ -280,4 +329,26 @@ select.field__input option { background: var(--panel); color: var(--text); }
 @media (max-width: 680px) {
   .field-row { grid-template-columns: minmax(0, 1fr); }
   .offerfields__remove { position: static; align-self: flex-end; margin-top: -28px; }
+}
+
+/* ── Contacts on a listing card ─────────────────────────────────────────── */
+.offer__contacts { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.ocontact {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 10px;
+  border-left: 2px solid rgba(61, 214, 208, 0.45);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: rgba(61, 214, 208, 0.045);
+}
+.ocontact__name { font-weight: 600; font-size: 13px; color: var(--text); }
+.ocontact__role { font-size: 12px; color: var(--muted); }
+.ocontact__level {
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
 }

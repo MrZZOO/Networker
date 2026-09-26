@@ -2,6 +2,7 @@ import { initials, formatFee, formatPct } from '../lib/format.js'
 import { resolveNetwork } from '../lib/networks.js'
 import { getTier } from '../lib/tiers.js'
 import { getChannel, channelsForListing } from '../lib/channels.js'
+import { getIntroLevel } from '../lib/introLevels.js'
 
 /* One person's listing.
 
@@ -46,6 +47,23 @@ function OfferRow({ offer }) {
       {/* The promise about the future. This is what the fee buys, and what a refund
           is measured against. */}
       <p className="offer__deliverable">{offer.deliverable}</p>
+
+      {/* The named doors. This is what a buyer is actually choosing between —
+          a category cannot be priced, a specific person can. */}
+      {offer.contacts?.length > 0 && (
+        <ul className="offer__contacts">
+          {offer.contacts.map((c, i) => {
+            const level = getIntroLevel(c.level)
+            return (
+              <li className="ocontact" key={i}>
+                <span className="ocontact__name">{c.name}</span>
+                <span className="ocontact__role">{c.role}</span>
+                {level && <span className="ocontact__level">{level.label}</span>}
+              </li>
+            )
+          })}
+        </ul>
+      )}
 
       <div className="offer__foot">
         {fee ? (

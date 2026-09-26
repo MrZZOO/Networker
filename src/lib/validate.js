@@ -1,4 +1,5 @@
 import { NETWORK_IDS, CUSTOM_NETWORK_MAX, sanitizeCustomNetwork } from './networks.js'
+import { INTRO_LEVEL_IDS } from './introLevels.js'
 import { TIER_IDS } from './tiers.js'
 import { CHANNEL_IDS } from './channels.js'
 
@@ -18,9 +19,16 @@ export const LIMITS = {
   customNetwork: CUSTOM_NETWORK_MAX,
   maxOffers: 6,
   maxFee: 1_000_000,
+  contactName: 80,
+  contactRole: 100,
+  maxContacts: 8,
 }
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+
+export function emptyContact() {
+  return { name: '', role: '', level: '' }
+}
 
 export function emptyOffer() {
   return {
@@ -32,6 +40,9 @@ export function emptyOffer() {
     free: false,
     feeAmount: '',
     channels: [],
+    // At least one named person — a network with no names in it is not a door
+    // anyone can price.
+    contacts: [emptyContact()],
   }
 }
 
@@ -94,6 +105,18 @@ export function validateOffer(offer, index) {
     errors[k('channels')] = 'Unknown channel'
   }
 
+  const contacts = offer.contacts ?? []
+  if (!contacts.length) errors[k('contacts')] = 'Add at least one person'
+  else if (contacts.length > LIMITS.maxContacts) {
+    errors[k('contacts')] = `Up to ${LIMITS.maxContacts} people per network`
+  }
+  contacts.forEach((c, ci) => {
+    const ck = (f) => `offers.${index}.contacts.${ci}.${f}`
+    req(c.name, ck('name'), 'A name', LIMITS.contactName, errors)
+    req(c.role, ck('role'), 'Their role', LIMITS.contactRole, errors)
+    if (!INTRO_LEVEL_IDS.includes(c.level)) errors[ck('level')] = 'Pick what you can offer'
+  })
+
   return errors
 }
 
@@ -146,6 +169,11 @@ export function toRecord(app) {
       feeAmount: o.free ? 0 : Number(o.feeAmount),
       feeCurrency: 'USD',
       channels: o.channels ?? [],
+      contacts: (o.contacts ?? []).map((c) => ({
+        name: c.name.trim(),
+        role: c.role.trim(),
+        level: c.level,
+      })),
     })),
   }
 }
