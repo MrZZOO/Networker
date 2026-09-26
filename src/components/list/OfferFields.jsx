@@ -37,6 +37,86 @@ export default function OfferFields({ offer, index, errors, onChange, onRemove, 
         </button>
       )}
 
+      {/* WHO IS ACTUALLY BEHIND THIS NETWORK.
+          A buyer is not choosing between abstract categories, they are choosing
+          between specific doors — so the name, the role and the strength of the
+          introduction are the three things that let them price one. */}
+      <div className="contacts">
+        <div className="contacts__head">
+          <span className="field__label">Who you can reach</span>
+          <span className="field__hint">
+            Named publicly. Payment only settles once the introduction is actually
+            made, so there is nothing to gain from listing someone you cannot reach.
+          </span>
+        </div>
+
+        {contacts.map((c, ci) => {
+          const cerr = (f) => errors[`offers.${index}.contacts.${ci}.${f}`]
+          return (
+            <div className="contact" key={ci}>
+              <div className="contact__grid">
+                <label className="field">
+                  <span className="field__label">Name</span>
+                  <input
+                    className="field__input"
+                    type="text"
+                    maxLength={LIMITS.contactName}
+                    value={c.name}
+                    onChange={(e) => setContact(ci, { name: e.target.value })}
+                    placeholder="Jane Okafor"
+                  />
+                  {cerr('name') && <span className="field__err">{cerr('name')}</span>}
+                </label>
+
+                <label className="field">
+                  <span className="field__label">Role</span>
+                  <input
+                    className="field__input"
+                    type="text"
+                    maxLength={LIMITS.contactRole}
+                    value={c.role}
+                    onChange={(e) => setContact(ci, { role: e.target.value })}
+                    placeholder="Partner, Ridgeline Capital"
+                  />
+                  {cerr('role') && <span className="field__err">{cerr('role')}</span>}
+                </label>
+
+                <label className="field">
+                  <span className="field__label">What you can offer</span>
+                  <select
+                    className="field__input"
+                    value={c.level}
+                    onChange={(e) => setContact(ci, { level: e.target.value })}
+                  >
+                    <option value="">Select…</option>
+                    {INTRO_LEVELS.map((l) => (
+                      <option key={l.id} value={l.id}>
+                        {l.label}
+                      </option>
+                    ))}
+                  </select>
+                  {cerr('level') && <span className="field__err">{cerr('level')}</span>}
+                </label>
+              </div>
+
+              {contacts.length > 1 && (
+                <button type="button" className="contact__remove" onClick={() => removeContact(ci)}>
+                  Remove
+                </button>
+              )}
+            </div>
+          )
+        })}
+
+        {err('contacts') && <span className="field__err">{err('contacts')}</span>}
+
+        {contacts.length < LIMITS.maxContacts && (
+          <button type="button" className="btn btn--ghost btn--sm contacts__add" onClick={addContact}>
+            <Asterisk size={11} /> Add another person
+          </button>
+        )}
+      </div>
+
       <div className="field-row">
         <label className="field">
           <span className="field__label">Which network?</span>
@@ -173,85 +253,6 @@ export default function OfferFields({ offer, index, errors, onChange, onRemove, 
         </div>
       </div>
 
-      {/* WHO IS ACTUALLY BEHIND THIS NETWORK.
-          A buyer is not choosing between abstract categories, they are choosing
-          between specific doors — so the name, the role and the strength of the
-          introduction are the three things that let them price one. */}
-      <div className="contacts">
-        <div className="contacts__head">
-          <span className="field__label">Who you can reach</span>
-          <span className="field__hint">
-            Named publicly. Payment only settles once the introduction is actually
-            made, so there is nothing to gain from listing someone you cannot reach.
-          </span>
-        </div>
-
-        {contacts.map((c, ci) => {
-          const cerr = (f) => errors[`offers.${index}.contacts.${ci}.${f}`]
-          return (
-            <div className="contact" key={ci}>
-              <div className="contact__grid">
-                <label className="field">
-                  <span className="field__label">Name</span>
-                  <input
-                    className="field__input"
-                    type="text"
-                    maxLength={LIMITS.contactName}
-                    value={c.name}
-                    onChange={(e) => setContact(ci, { name: e.target.value })}
-                    placeholder="Jane Okafor"
-                  />
-                  {cerr('name') && <span className="field__err">{cerr('name')}</span>}
-                </label>
-
-                <label className="field">
-                  <span className="field__label">Role</span>
-                  <input
-                    className="field__input"
-                    type="text"
-                    maxLength={LIMITS.contactRole}
-                    value={c.role}
-                    onChange={(e) => setContact(ci, { role: e.target.value })}
-                    placeholder="Partner, Ridgeline Capital"
-                  />
-                  {cerr('role') && <span className="field__err">{cerr('role')}</span>}
-                </label>
-
-                <label className="field">
-                  <span className="field__label">What you can offer</span>
-                  <select
-                    className="field__input"
-                    value={c.level}
-                    onChange={(e) => setContact(ci, { level: e.target.value })}
-                  >
-                    <option value="">Select…</option>
-                    {INTRO_LEVELS.map((l) => (
-                      <option key={l.id} value={l.id}>
-                        {l.label}
-                      </option>
-                    ))}
-                  </select>
-                  {cerr('level') && <span className="field__err">{cerr('level')}</span>}
-                </label>
-              </div>
-
-              {contacts.length > 1 && (
-                <button type="button" className="contact__remove" onClick={() => removeContact(ci)}>
-                  Remove
-                </button>
-              )}
-            </div>
-          )
-        })}
-
-        {err('contacts') && <span className="field__err">{err('contacts')}</span>}
-
-        {contacts.length < LIMITS.maxContacts && (
-          <button type="button" className="btn btn--ghost btn--sm contacts__add" onClick={addContact}>
-            <Asterisk size={11} /> Add another person
-          </button>
-        )}
-      </div>
     </fieldset>
   )
 }

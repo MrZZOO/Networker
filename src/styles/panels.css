@@ -261,12 +261,15 @@ select.field__input option { background: var(--panel); color: var(--text); }
 .toggle.is-on { background: var(--cyan); border-color: var(--cyan); color: #06060F; font-weight: 600; }
 
 /* ── Contacts — the named people behind a network ───────────────────────── */
+/* The rule sits BELOW, not above: contacts now open the fieldset, so the divider
+   has to separate them from the classification fields that follow. The legend
+   already does the work a top border used to. */
 .contacts {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
 }
 .contacts__head { display: flex; flex-direction: column; gap: 4px; }
 .contact {
