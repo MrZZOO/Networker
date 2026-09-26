@@ -20,12 +20,12 @@ export default function OfferFields({ offer, index, errors, onChange, onRemove, 
 
   return (
     <fieldset className="offerfields">
-      <legend className="offerfields__legend label">
+      <legend className="offerfields__legend">
         <Asterisk size={10} /> Network {index + 1}
       </legend>
 
       {canRemove && (
-        <button type="button" className="offerfields__remove label" onClick={onRemove}>
+        <button type="button" className="offerfields__remove" onClick={onRemove}>
           Remove
         </button>
       )}
@@ -92,7 +92,7 @@ export default function OfferFields({ offer, index, errors, onChange, onRemove, 
           onChange={(e) => set({ provenance: e.target.value })}
           placeholder="Partner at ___ 2019–2024, still in the investment-committee channel."
         />
-        <span className="field__hint label">
+        <span className="field__hint">
           The claim someone is judging. Specific beats impressive.
         </span>
         {err('provenance') && <span className="field__err">{err('provenance')}</span>}
@@ -108,7 +108,7 @@ export default function OfferFields({ offer, index, errors, onChange, onRemove, 
           onChange={(e) => set({ deliverable: e.target.value })}
           placeholder="A warm intro to a partner — not an associate, not a form."
         />
-        <span className="field__hint label">
+        <span className="field__hint">
           This is what the fee buys, and what a refund is measured against.
         </span>
         {err('deliverable') && <span className="field__err">{err('deliverable')}</span>}
@@ -138,9 +138,9 @@ export default function OfferFields({ offer, index, errors, onChange, onRemove, 
               placeholder="250"
               aria-label="Fee amount in USD"
             />
-            <span className="feerow__unit label">USD</span>
+            <span className="feerow__unit">USD</span>
           </div>
-          <span className="field__hint label">
+          <span className="field__hint">
             Quoted in USD — the platform token has no ticker yet, so pricing in it
             would be pricing in nothing.
           </span>

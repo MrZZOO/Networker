@@ -38,9 +38,9 @@ function OfferRow({ offer }) {
       <div className="offer__head">
         <span className="offer__net">
           {network?.label ?? 'Network'}
-          {network?.custom && <em className="offer__custom label">custom</em>}
+          {network?.custom && <em className="offer__custom">custom</em>}
         </span>
-        {tier && <span className="offer__tier label">{tier.label}</span>}
+        {tier && <span className="offer__tier">{tier.label}</span>}
       </div>
 
       {/* The promise about the future. This is what the fee buys, and what a refund
@@ -50,7 +50,7 @@ function OfferRow({ offer }) {
       <div className="offer__foot">
         {fee ? (
           fee.free ? (
-            <span className="offer__fee offer__fee--free label">Free</span>
+            <span className="offer__fee offer__fee--free">Free</span>
           ) : (
             <span className="offer__fee">{fee.text}</span>
           )
@@ -59,7 +59,7 @@ function OfferRow({ offer }) {
           {(offer.channels ?? []).map((id) => {
             const c = getChannel(id)
             return c ? (
-              <span className="offer__chan label" key={id}>
+              <span className="offer__chan" key={id}>
                 {c.label}
               </span>
             ) : null
@@ -109,12 +109,12 @@ export default function ListingCard({ listing }) {
 
       <footer className="listing__foot">
         {channels.length > 0 && (
-          <span className="label">{channels.length} channels open</span>
+          <span className="eyebrow">{channels.length} channels open</span>
         )}
         {/* Null stats render nothing. Never a dash, never a zero. */}
-        {responseRate && <span className="label">{responseRate} reply rate</span>}
+        {responseRate && <span className="eyebrow">{responseRate} reply rate</span>}
         {listing.introsCompleted > 0 && (
-          <span className="label">{listing.introsCompleted} intros made</span>
+          <span className="eyebrow">{listing.introsCompleted} intros made</span>
         )}
       </footer>
     </article>

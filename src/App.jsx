@@ -6,11 +6,11 @@ import DevConfigBanner from './components/common/DevConfigBanner.jsx'
 import Home from './pages/Home.jsx'
 import ListYourNetwork from './pages/ListYourNetwork.jsx'
 
-/* The landing page plus the listing intake. /directory is still a later step — it
-   needs real listings to show, and there are none until applications are reviewed. */
 export default function App() {
   return (
     <>
+      {/* Fixed atmosphere behind everything — never scrolls. */}
+      <div className="backdrop" aria-hidden="true" />
       <ScrollToTop />
       <Nav />
       <Routes>

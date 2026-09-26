@@ -61,10 +61,14 @@ export const CONFIG = {
   // Counts render ONLY when a real backend has counted them. Until then the hero
   // proof pill shows MECHANIC_LINE instead of a number: same pill, same corner,
   // same weight, no invented traction.
-  LISTER_COUNT: null,       // null → pill shows MECHANIC_LINE. No number, no "+".
-  INTRO_COUNT: null,        // null → the "intros made" stat is not rendered at all
+  LISTER_COUNT: null,       // null → the roster shows numbered unclaimed slots
+  INTRO_COUNT: null,        // null → the stat tile shows an em-dash, never a 0
   WAITLIST_COUNT: null,     // null → "join the open call", with no count
   PROOF_AVATARS: [],        // [] → AvatarStack renders 3 dashed vacancy rings
+
+  // Median hours to a reply, across open networks. Computed from real requests
+  // or nothing at all — an estimate here would be the easiest lie on the page.
+  MEDIAN_REPLY_HOURS: null,
 
   // The always-true fallback. Register matters here: the supply side is people who
   // already get more inbound than they can read, and their objection is not "can I

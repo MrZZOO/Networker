@@ -1,95 +1,77 @@
+import { Link } from 'react-router-dom'
+import Asterisk from './common/Asterisk.jsx'
 import NetworkPlate from './common/NetworkPlate.jsx'
-import HeroProofPill from './HeroProofPill.jsx'
-import HeroRadialLabels from './HeroRadialLabels.jsx'
-import HeroTagCloud from './HeroTagCloud.jsx'
 import { CONFIG } from '../config.js'
+import { intakeTarget } from '../lib/intake.js'
 
-/* The one big rounded card.
+/* The hero, launchpad-shaped: text left, a floating object over a glow orb on
+   the right — the same composition Spinach uses for its can.
 
-   The headline sets `max-width: 14ch` rather than hard-coded <br>s — that is what
-   forces the reference's ~4-line wrap at every viewport instead of breaking badly
-   on resize. */
+   The headline follows the house pattern: plain text with exactly ONE word
+   carrying the gradient. Never a fully gradient heading. */
 
-/* Fallback only — CONFIG.TAGLINE is filled, so this is what renders if it is ever
-   cleared. Kept neutral and literally true.
+const DEFAULT_TAGLINE = 'Dive into the world of networks you need'
 
-   An earlier draft read "Open the doors that money cannot knock on". It was cut
-   because it contradicts the product: the entire mechanism is money knocking on
-   doors. A headline that argues against the thing it is selling is a misnomer, not
-   a flourish. */
-const DEFAULT_TAGLINE = 'A market for the introductions you cannot buy anywhere else'
-
-function IconButton({ label, onClick, children }) {
+/* Split the tagline so the last word can carry the gradient without hardcoding
+   the copy — change CONFIG.TAGLINE and the emphasis follows. */
+function Headline({ text }) {
+  const words = text.trim().split(/\s+/)
+  const last = words.pop()
   return (
-    <button className="icon-btn" type="button" onClick={onClick} aria-label={label}>
-      {children}
-    </button>
+    <h1 className="display-h1">
+      {words.join(' ')} <span className="grad-text">{last}</span>
+    </h1>
   )
 }
 
 export default function Hero() {
-  const title = CONFIG.TAGLINE ?? DEFAULT_TAGLINE
-
-  const scrollTo = (id) => () => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
+  const intake = intakeTarget()
 
   return (
     <header className="hero" id="top">
-      <div className="hero__card">
-        {CONFIG.HERO_IMAGE ? (
-          <>
-            <img className="hero__img" src={CONFIG.HERO_IMAGE} alt="" />
-            {/* Two passes: veil tints the photo blue, shade darkens under the type. */}
-            <span className="hero__veil" aria-hidden="true" />
-            <span className="hero__shade" aria-hidden="true" />
-          </>
-        ) : (
-          <NetworkPlate seed={3} variant="hero" className="hero__plate" />
-        )}
-
+      <div className="container">
         <div className="hero__grid">
-          <div className="hero__proof">
-            <HeroProofPill />
+          <div>
+            <span className="eyebrow">
+              <Asterisk size={10} />
+              A launchpad for networks · pre-launch
+            </span>
+
+            <Headline text={CONFIG.TAGLINE ?? DEFAULT_TAGLINE} />
+
+            <p className="lede">
+              List the rooms you are already in, price the door, and take only the
+              requests worth taking. The fee is the filter — and every refusal
+              refunds in full.
+            </p>
+
+            <div className="hero__ctas">
+              <Link className="btn btn--amber" to={intake.to}>
+                Launch your network
+              </Link>
+              <a className="btn btn--ghost" href="#how">
+                How the market works ↓
+              </a>
+            </div>
           </div>
 
-          <div className="hero__radial">
-            <HeroRadialLabels />
-          </div>
-
-          <div className="hero__links">
-            <IconButton label="Scroll to how it works" onClick={scrollTo('how')}>
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-                <path
-                  d="M12 5v14M6 13l6 6 6-6"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </IconButton>
-            <IconButton label="Jump to the networks" onClick={scrollTo('networks')}>
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-                <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1.6" />
-                <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.6" />
-              </svg>
-            </IconButton>
-            <a className="hero__link label" href="#how">
-              How the market works →
-            </a>
-          </div>
-
-          <h1 className="hero__title">{title}</h1>
-
-          <div className="hero__tags">
-            <HeroTagCloud />
+          <div className="hero__art" aria-hidden="true">
+            <div className="hero__glow" />
+            <div className="hero__photo">
+              {CONFIG.HERO_IMAGE ? (
+                <>
+                  <img src={CONFIG.HERO_IMAGE} alt="" />
+                  <span className="hero__photo-tint" />
+                </>
+              ) : (
+                <NetworkPlate seed={3} variant="hero" />
+              )}
+              <span className="hero__photo-shade" />
+              <span className="hero__photo-cap">Introductions at your discretion</span>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Null renders nothing at all — no empty paragraph holding space. */}
-      {CONFIG.SUBLINE && <p className="hero__sub">{CONFIG.SUBLINE}</p>}
     </header>
   )
 }

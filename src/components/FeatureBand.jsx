@@ -68,6 +68,7 @@ export default function FeatureBand() {
 
   return (
     <section className="section" id="networks">
+      <div className="container">
       <RevealOnScroll className="band">
         <div className="band__left">
           {MECHANICS.map((m) => (
@@ -82,13 +83,11 @@ export default function FeatureBand() {
         </div>
 
         <div className="band__right">
-          <h2 className="band__title">
-            <span className="band__title-dim">What makes</span>{' '}
-            <span className="band__title-ink">{CONFIG.NAME}</span>{' '}
-            <span className="band__title-dim">different?</span>
+          <h2 className="display-h2">
+            What makes <span className="grad-text">{CONFIG.NAME}</span> different?
           </h2>
 
-          <Pill variant="ink" href="#how" className="band__cta">
+          <Pill variant="amber" href="#how" className="band__cta">
             <Asterisk size={12} />
             Read how it works
           </Pill>
@@ -122,6 +121,7 @@ export default function FeatureBand() {
           </div>
         </div>
       </RevealOnScroll>
+      </div>
     </section>
   )
 }

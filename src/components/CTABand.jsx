@@ -1,39 +1,41 @@
-import Asterisk from './common/Asterisk.jsx'
-import Pill from './common/Pill.jsx'
+import { Link } from 'react-router-dom'
 import RevealOnScroll from './common/RevealOnScroll.jsx'
 import { intakeTarget, isOpenCall } from '../lib/intake.js'
 
-/* The closing band.
+/* The closing band, with the spinning conic border — the one loud effect on the
+   page, borrowed from Popeye's CTA.
 
-   "Request an intro" is DISABLED WITH ITS REASON VISIBLE while the market is in
-   open-call — never hidden. Someone who came here to buy an introduction should see
-   that the door exists and learn when it opens, not find a page with no buyer path
-   on it at all. */
+   "Request an introduction" is DISABLED WITH ITS REASON VISIBLE while the market
+   is pre-launch, never hidden. Someone who came here to buy an intro should see
+   the door exists and learn when it opens. */
 export default function CTABand() {
   const intake = intakeTarget()
   const openCall = isOpenCall()
 
   return (
     <section className="section">
-      <RevealOnScroll className="cta">
-        <h2 className="cta__title">Who can you reach that nobody else can?</h2>
+      <div className="container">
+        <RevealOnScroll className="cta-glow">
+          <div className="cta-glow__inner">
+            <h2 className="display-h2">
+              Who can you reach that <span className="grad-text">nobody else</span> can?
+            </h2>
 
-        <div className="cta__row">
-          <Pill variant="white" to={intake.to}>
-            <Asterisk size={12} />
-            List your network
-          </Pill>
+            <div className="cta-glow__row">
+              <Link className="btn btn--amber" to={intake.to}>
+                Launch your network
+              </Link>
 
-          <Pill
-            variant="wash-outline"
-            href={openCall ? undefined : '#directory'}
-            disabled={openCall}
-            disabledReason={openCall ? 'Opens when the first networks are listed' : null}
-          >
-            Request an introduction
-          </Pill>
-        </div>
-      </RevealOnScroll>
+              <span className="btn-with-reason">
+                <span className="btn btn--ghost is-disabled" aria-disabled={openCall}>
+                  Request an introduction
+                </span>
+                {openCall && <span className="btn-reason">Opens when the first networks launch</span>}
+              </span>
+            </div>
+          </div>
+        </RevealOnScroll>
+      </div>
     </section>
   )
 }

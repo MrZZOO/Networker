@@ -5,68 +5,58 @@ import { TIERS } from '../lib/tiers.js'
 import { CONFIG } from '../config.js'
 import { formatFee } from '../lib/format.js'
 
-/* The tier ladder — the product's core idea made visible.
+/* The ladder — the product's core idea made visible.
 
-   A tier describes WHO IS BEING REACHED, not who is doing the reaching. The same
-   person holds the whole ladder: their builder network might be free and a tier-1
-   fund partner expensive.
-
-   The fee slot reads CONFIG.TIER_FEE_BANDS. Those are null and will stay null
-   unless Dean declares floors and ceilings, so the card renders "Fee set by the
-   lister" — which is the literal truth of the product, so the card never looks
-   unfinished for want of a number nobody has decided. */
+   A tier describes WHO IS BEING REACHED, not who is doing the reaching. One
+   person holds the whole ladder: their builder network might be free and a
+   tier-1 fund partner expensive. */
 
 function BandFee({ tierId }) {
   const band = CONFIG.TIER_FEE_BANDS?.[tierId]
   const min = formatFee(band?.min)
   const max = formatFee(band?.max)
-
-  if (!min && !max) {
-    return <span className="tier-card__fee label">Fee set by the lister</span>
-  }
-
+  if (!min && !max) return <span className="tier-card__fee">Fee set by the lister</span>
   const text = min && max ? `${min.text} – ${max.text}` : (min ?? max).text
-  return <span className="tier-card__fee tier-card__fee--num">{text}</span>
+  return <span className="tier-card__fee">{text}</span>
 }
 
 export default function TierLadder() {
-  /* The ladder is a selectable set: clicking a rung fills it ink and clears the
-     others. Open starts selected because "some of this is free" is the most
-     disarming thing the product says and deserves the focal position on load. */
   const [active, setActive] = useState(TIERS.find((t) => t.focal)?.id ?? TIERS[0].id)
 
   return (
     <section className="section" id="tiers">
-      <RevealOnScroll>
-        <div className="section__head">
-          <span className="label">
-            <Asterisk size={10} /> The ladder
-          </span>
-          <h2 className="section__title">
-            One person, <em>four</em> kinds of door
-          </h2>
-          <p className="section__lede">
-            You do not have a price. You have a ladder. Open the rooms you are happy
-            to open, and price the ones that cost you something to open.
-          </p>
-        </div>
+      <div className="container">
+        <RevealOnScroll>
+          <div className="section-head">
+            <span className="eyebrow eyebrow--amber">
+              <Asterisk size={10} /> The ladder
+            </span>
+            <h2 className="display-h2">
+              One person, four kinds of <span className="grad-text">door</span>
+            </h2>
+            <p className="lede">
+              You do not have a price. You have a ladder. Open the rooms you are
+              happy to open, and price the ones that cost you something to open.
+            </p>
+          </div>
 
-        <div className="tier-grid">
-          {TIERS.map((t) => (
-            <button
-              type="button"
-              className={`tier-card ${active === t.id ? 'is-active' : ''}`}
-              key={t.id}
-              onClick={() => setActive(t.id)}
-              aria-pressed={active === t.id}
-            >
-              <span className="tier-card__label">{t.label}</span>
-              <p className="tier-card__who">{t.who}</p>
-              <BandFee tierId={t.id} />
-            </button>
-          ))}
-        </div>
-      </RevealOnScroll>
+          <div className="tier-grid">
+            {TIERS.map((t) => (
+              <button
+                type="button"
+                key={t.id}
+                className={`glass tier-card ${active === t.id ? 'is-active' : ''}`}
+                onClick={() => setActive(t.id)}
+                aria-pressed={active === t.id}
+              >
+                <span className="tier-card__label">{t.label}</span>
+                <p className="tier-card__who">{t.who}</p>
+                <BandFee tierId={t.id} />
+              </button>
+            ))}
+          </div>
+        </RevealOnScroll>
+      </div>
     </section>
   )
 }

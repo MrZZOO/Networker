@@ -1,88 +1,94 @@
-/* ─── Design tokens — editorial / Swiss-modern identity ─────────────────────
-   Off-white ground, everything on big white rounded cards, one desaturated blue
-   photo wash, near-black ink.
+/* ─── Networker — a launchpad for networks ──────────────────────────────────
+   Dark navy ground, glass hairlines, two accents. Built in the same family as
+   Spinach and Popeye, deliberately not a copy of either:
 
-   NO ACCENT COLOUR. In this idiom emphasis comes from weight, size and the single
-   ink-filled pill — not from hue. If you find yourself reaching for a colour to
-   make something stand out, make it bigger or make it black instead. */
+     Spinach  navy + can-green + label-yellow
+     Popeye   void + violet→cyan
+     Networker  navy + AMBER (money) + CYAN (live)
+
+   Amber carries fees, prices and the primary CTA, because the fee is the product.
+   Cyan carries status — open, live, accepted. Violet exists only inside the
+   gradient, where it hands off to cyan: two ends meeting, which is the whole
+   product in one shape.
+
+   Archivo stays as the display face rather than switching to Space Grotesk like
+   the other two — Networker should read as a sibling, not a clone. */
+
 :root {
-  /* Ground + surfaces */
-  --paper:        #F2F1EE;              /* page ground — the off-white */
-  --paper-sunk:   #EAE8E4;              /* recessed wells: active pill slot, inputs */
-  --card:         #FFFFFF;              /* every rounded card, every white nav pill */
-  --ink:          #111110;              /* near-black: headlines, MENU pill, filled tags */
-  --ink-2:        rgba(17, 17, 16, 0.62);  /* small grey body paragraphs */
-  --ink-3:        rgba(17, 17, 16, 0.40);  /* labels, meta, carousel dots */
-  --ink-4:        rgba(17, 17, 16, 0.24);  /* dashed vacancy outlines */
-  --hairline:     rgba(17, 17, 16, 0.12);  /* the divider between feature rows */
-  --hairline-2:   rgba(17, 17, 16, 0.22);  /* outlined tag borders */
+  color-scheme: dark;
 
-  /* Text sitting on the blue wash */
-  --on-wash:      #FFFFFF;
-  --on-wash-2:    rgba(255, 255, 255, 0.72);
-  --on-wash-3:    rgba(255, 255, 255, 0.52);
-  --on-wash-line: rgba(255, 255, 255, 0.45);  /* the thin radial connector strokes */
+  /* Surfaces — a four-step dark ramp, violet-biased, never neutral grey */
+  --void:      #06060F;   /* deepest, behind everything */
+  --navy:      #0B0B1E;   /* page ground */
+  --panel:     #101128;   /* cards */
+  --panel-2:   #16183A;   /* card top, for the top-lit gradient */
 
-  /* The desaturated blue wash — a duotone over any image, and the standalone
-     ground when there is no image (NetworkPlate). */
-  --wash-deep:    #26384C;
-  --wash-mid:     #4F6B8A;
-  --wash-hi:      #91A6BD;
-  --wash-grad:    linear-gradient(145deg, var(--wash-hi) 0%, var(--wash-mid) 46%, var(--wash-deep) 100%);
-  --wash-veil:    linear-gradient(180deg, rgba(38, 56, 76, 0.16) 0%, rgba(38, 56, 76, 0.60) 100%);
-  /* Filter applied to real photos. The brightness lift matters: the hero shot is a
-     dusk sky, which sits far darker than the bright-daylight reference, and
-     desaturating alone leaves it muddy rather than airy. */
-  --wash-sat:     saturate(0.28) brightness(1.24) contrast(0.96);
-  /* A gentler grade for photographs of people. The hero treatment is tuned for a
-     sky, where crushing saturation reads as atmosphere; on a face it reads as
-     ill. Keeps enough colour for skin to look like skin. */
-  --wash-sat-portrait: saturate(0.62) brightness(1.06) contrast(1.02);
+  /* Hairlines are translucent TEXT colour, so every panel reads as glass over
+     the navy rather than as a grey box. */
+  --line:        rgba(236, 238, 255, 0.08);
+  --line-strong: rgba(236, 238, 255, 0.16);
 
-  /* State — restrained; this palette earns its calm */
-  --accept:       #1E6B4C;
-  --refuse:       rgba(17, 17, 16, 0.55);
+  /* Text ramp */
+  --text:  #F0F1FF;
+  --muted: #A2A4CE;
+  --dim:   #6E709C;
+
+  /* Accents */
+  --amber:     #F5B33C;   /* fees, prices, primary CTA */
+  --amber-lit: #FFC861;
+  --amber-deep:#5A3F12;   /* text on an amber fill */
+  --cyan:      #3DD6D0;   /* live / open / accepted */
+  --cyan-lit:  #6FE8E3;
+  --violet:    #8B7CF6;   /* gradient partner only */
+  --rose:      #F2708A;   /* refused / error — rare by design */
+
+  /* The connection gradient: violet reaching cyan. */
+  --grad:      linear-gradient(90deg, var(--violet), var(--cyan));
+  --grad-warm: linear-gradient(90deg, var(--amber), var(--amber-lit));
 
   /* Typography */
   --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body:    "Inter", system-ui, sans-serif;
   --font-mono:    "IBM Plex Mono", ui-monospace, monospace;
 
-  /* Sized against the reference: its headline sits around 52px on a 1440 viewport,
-     four lines deep. 8.6vw put it at 124px, which overflowed the card and pushed
-     the tag cloud off the page. */
-  --text-hero:    clamp(34px, 5.1vw, 76px);
-  --text-h2:      clamp(28px, 3.6vw, 50px);
-  --text-h3:      clamp(19px, 2vw, 26px);
-  --text-lede:    clamp(15px, 1.5vw, 18px);
-  --text-base:    15px;
-  --text-small:   13px;
-  --text-label:   11px;
+  --text-hero:  clamp(2.4rem, 5.4vw, 4.4rem);
+  --text-h2:    clamp(1.7rem, 3.4vw, 2.6rem);
+  --text-h3:    clamp(1.05rem, 1.7vw, 1.3rem);
+  --text-lede:  clamp(0.98rem, 1.3vw, 1.08rem);
 
-  --lh-hero:      0.95;      /* the very tight leading of the reference headline */
-  --lh-h2:        0.96;
-  --lh-body:      1.62;
-  --track-hero:   -0.025em;
-  --track-label:  0.17em;    /* the uppercase letter-spaced label look */
-  --track-tag:    0.11em;
+  --lh-hero:   1.02;
+  --lh-h2:     1.1;
+  --track-hero: -0.03em;
+  /* Mono is set LOOSE where the display face is TIGHT. That inversion — fat
+     negative-tracked headlines against tiny positive-tracked mono — is the whole
+     typographic signature of this genre. */
+  --track-mono: 0.12em;
 
-  /* Rhythm */
-  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
-  --space-5: 24px;  --space-6: 32px;  --space-8: 48px;  --space-10: 64px;
-  --space-12: 96px; --space-16: 128px;
+  /* Geometry — one radius family, like Spinach's single 18px */
+  --radius:    18px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
 
-  --max-w:  1440px;                     /* editorial runs wider than V4Hooks' 1160 */
-  --gutter: clamp(14px, 2.6vw, 28px);   /* page inset — the hero card's breathing room */
+  --max-w:  1200px;
+  --gutter: clamp(16px, 3vw, 32px);
 
-  /* Radii — the reference's defining move */
-  --radius-hero:  32px;
-  --radius-card:  28px;
-  --radius-photo: 20px;
-  --radius-sm:    14px;
-  --radius-pill:  999px;
+  /* Depth comes from drop-shadow on objects and hairlines on panels, not from
+     box-shadow on boxes. */
+  --glow-amber: 0 0 40px rgba(245, 179, 60, 0.22);
+  --glow-cyan:  0 0 40px rgba(61, 214, 208, 0.20);
 
-  --shadow-card: 0 1px 2px rgba(17, 17, 16, 0.04), 0 12px 32px rgba(17, 17, 16, 0.05);
-  --shadow-pill: 0 1px 2px rgba(17, 17, 16, 0.06), 0 6px 18px rgba(17, 17, 16, 0.07);
+  --ease:   cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-2: cubic-bezier(0.16, 1, 0.3, 1);
 
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Photography keeps the blue duotone from the editorial build — it still suits
+     a navy ground, and the hero image was chosen for it. */
+  --wash-deep: #26384C;
+  --wash-mid:  #4F6B8A;
+  --wash-hi:   #91A6BD;
+  --wash-sat:          saturate(0.35) brightness(1.05) contrast(1.02);
+  --wash-sat-portrait: saturate(0.62) brightness(1.02) contrast(1.02);
+  --on-wash:      #FFFFFF;
+  --on-wash-2:    rgba(255, 255, 255, 0.72);
+  --on-wash-3:    rgba(255, 255, 255, 0.52);
+  --on-wash-line: rgba(255, 255, 255, 0.45);
 }

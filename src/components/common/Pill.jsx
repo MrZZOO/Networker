@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom'
 
-/* The one pill primitive. Everything on this page is a pill: the nav, the CTAs,
-   the tags, the channel chips.
+/* The button primitive, mapped onto the launchpad button system.
 
-   variant: white | ink | outline | ghost | wash-outline
+   variant: amber (money / primary) | gradient | ghost
    as:      auto — <Link> for an internal `to`, <a> for `href`, else <button>
 
    HOUSE RULE, enforced here: a control that cannot be used is DISABLED WITH ITS
-   REASON VISIBLE, never hidden. Pass `disabledReason` and the pill renders inert
-   with the reason beside it, so nobody hunts for a button that silently vanished. */
+   REASON VISIBLE, never hidden. Pass `disabledReason` and the button renders
+   inert with the reason beneath, so nobody hunts for something that vanished. */
 export default function Pill({
   children,
-  variant = 'white',
+  variant = 'ghost',
   size = 'md',
   to,
   href,
@@ -21,29 +20,21 @@ export default function Pill({
   className = '',
   ...rest
 }) {
-  const classes = [
-    'pill',
-    `pill--${variant}`,
-    size !== 'md' ? `pill--${size}` : '',
-    disabled ? 'is-disabled' : '',
-    className,
-  ]
+  const classes = ['btn', `btn--${variant}`, size === 'sm' ? 'btn--sm' : '', className]
     .filter(Boolean)
     .join(' ')
-
-  const inner = <span className="pill__label">{children}</span>
 
   let control
   if (disabled) {
     control = (
-      <span className={classes} aria-disabled="true" {...rest}>
-        {inner}
+      <span className={`${classes} is-disabled`} aria-disabled="true" {...rest}>
+        {children}
       </span>
     )
   } else if (to) {
     control = (
       <Link className={classes} to={to} {...rest}>
-        {inner}
+        {children}
       </Link>
     )
   } else if (href) {
@@ -55,22 +46,22 @@ export default function Pill({
         {...(external ? { target: '_blank', rel: 'noreferrer noopener' } : {})}
         {...rest}
       >
-        {inner}
+        {children}
       </a>
     )
   } else {
     control = (
       <button className={classes} type="button" onClick={onClick} {...rest}>
-        {inner}
+        {children}
       </button>
     )
   }
 
   if (disabled && disabledReason) {
     return (
-      <span className="pill-with-reason">
+      <span className="btn-with-reason">
         {control}
-        <span className="pill-reason label">{disabledReason}</span>
+        <span className="btn-reason">{disabledReason}</span>
       </span>
     )
   }

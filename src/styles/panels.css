@@ -1,0 +1,283 @@
+/* ─── Panels, cards and forms ───────────────────────────────────────────────
+   Split from launch.css, which holds the page chrome (backdrop, nav, hero,
+   ticker, sections). This file holds the things that live INSIDE a section:
+   the feature band, photo cards, listing cards, and the listing form. */
+
+/* ── Feature band ───────────────────────────────────────────────────────── */
+.band { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+.feat-row { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.feat-row:last-child { border-bottom: none; }
+.feat-row__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-h3);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.feat-row__body { margin-top: 8px; font-size: 13.5px; color: var(--muted); max-width: 46ch; }
+
+.band__right { display: flex; flex-direction: column; align-items: flex-start; }
+.band__cta { margin-top: 24px; }
+.band__gallery { margin-top: 36px; display: flex; gap: 16px; width: 100%; }
+.band__dots { display: flex; flex-direction: column; gap: 10px; padding-top: 6px; }
+.band__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--dim);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.band__dot.is-active { background: var(--cyan); border-color: var(--cyan); }
+.band__cards { display: flex; gap: 12px; flex: 1; min-width: 0; }
+.band__card { flex: 1; min-width: 0; opacity: 0.55; transition: opacity 0.4s var(--ease); border: 1px solid var(--line); }
+.band__card.is-active { opacity: 1; border-color: var(--line-strong); }
+/* Sources are full-body; object-fit alone only trims ~11% going 2:3 to 3:4, so
+   the subject stays distant and the face tiny at this card size. */
+.band__card .photo-card__img { transform: scale(1.34); object-position: 50% 16%; }
+
+/* ── Plate + PhotoCard ──────────────────────────────────────────────────── */
+.plate { position: absolute; inset: 0; overflow: hidden; }
+.plate__svg { width: 100%; height: 100%; display: block; }
+
+.photo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--wash-mid);
+  flex-shrink: 0;
+  max-width: 100%;
+  isolation: isolate;
+}
+.photo-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+  filter: var(--wash-sat-portrait);
+}
+.photo-card__veil { position: absolute; inset: 0; background: var(--wash-mid); mix-blend-mode: color; opacity: 0.4; }
+
+/* ── Listing card ───────────────────────────────────────────────────────── */
+.listing { display: flex; flex-direction: column; gap: 14px; padding: 20px; }
+.listing__head { display: flex; align-items: flex-start; gap: 12px; }
+.listing__avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--grad);
+  color: #06060F;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.listing__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.listing__id { flex: 1; min-width: 0; }
+.listing__name { font-family: var(--font-display); font-weight: 700; font-size: 1rem; }
+.listing__headline { font-size: 12.5px; color: var(--muted); }
+.listing__provenance { font-size: 12.5px; color: var(--muted); padding-left: 11px; border-left: 2px solid var(--line-strong); }
+.listing__offers { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.offer { border-top: 1px solid var(--line); padding-top: 10px; }
+.offer__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.offer__net { font-weight: 600; font-size: 12.5px; }
+.offer__custom { font-style: normal; margin-left: 6px; }
+.offer__deliverable { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+.offer__foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 9px; }
+.offer__fee { font-family: var(--font-mono); font-size: 13px; color: var(--amber); font-variant-numeric: tabular-nums; }
+.offer__fee--free { color: var(--cyan); }
+.offer__channels { display: inline-flex; gap: 8px; flex-wrap: wrap; }
+.offer__chan,
+.offer__tier { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+.listing__foot { display: flex; gap: 14px; flex-wrap: wrap; margin-top: auto; padding-top: 4px; }
+.listing__foot span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+
+.verif {
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  flex-shrink: 0;
+}
+.verif--track-record { border-color: rgba(61, 214, 208, 0.4); color: var(--cyan); }
+
+/* ── Avatar stack — vacancy rings where a real user would be ────────────── */
+.avatars { display: inline-flex; flex-shrink: 0; }
+.avatars__item {
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--panel-2);
+  border: 2px solid var(--navy);
+  margin-right: -9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.avatars__item:last-child { margin-right: 0; }
+.avatars__item img { width: 100%; height: 100%; object-fit: cover; }
+.avatars__item--vacant { background: transparent; border: 1.5px dashed var(--line-strong); color: var(--dim); font-size: 13px; line-height: 1; }
+
+/* ── The listing form ───────────────────────────────────────────────────── */
+.page--form { padding-top: 48px; padding-bottom: 60px; }
+.formwrap { max-width: 860px; margin: 0 auto; padding: 0 var(--gutter); }
+.formwrap__back {
+  display: inline-block;
+  margin-bottom: 22px;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.formwrap__back:hover { color: var(--cyan); }
+.formhead { margin-bottom: 32px; }
+.formhead__lede { margin-top: 14px; font-size: var(--text-lede); color: var(--muted); max-width: 56ch; }
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--amber);
+  border-radius: var(--radius-sm);
+  background: rgba(245, 179, 60, 0.06);
+  padding: 15px 17px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.notice__title { color: var(--text); font-weight: 600; }
+.notice--bad { border-left-color: var(--rose); background: rgba(242, 112, 138, 0.07); }
+
+.form { display: flex; flex-direction: column; gap: 14px; }
+.offerfields {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  padding: clamp(18px, 3vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.offerfields__legend {
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.offerfields__remove {
+  position: absolute;
+  top: clamp(18px, 3vw, 28px);
+  right: clamp(18px, 3vw, 28px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.offerfields__remove:hover { color: var(--rose); }
+
+.field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field__label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.field__input {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--text);
+  background: rgba(6, 6, 15, 0.6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  width: 100%;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.field__input::placeholder { color: var(--dim); }
+.field__input:focus { outline: none; border-color: var(--cyan); background: rgba(6, 6, 15, 0.85); }
+.field__input:disabled { opacity: 0.4; cursor: not-allowed; }
+.field__input--area { resize: vertical; line-height: 1.55; }
+.field__input--fee { font-family: var(--font-mono); max-width: 140px; }
+.field__hint { font-size: 12px; color: var(--dim); }
+.field__err { font-size: 12px; color: var(--rose); }
+/* Native selects render their popup in the OS chrome, which on a dark page
+   defaults to a white list of white-on-white options without this. */
+select.field__input option { background: var(--panel); color: var(--text); }
+
+.feerow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.feerow__unit { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--dim); }
+.checkrow { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.toggle {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.toggle:hover { border-color: var(--cyan); color: var(--text); }
+.toggle.is-on { background: var(--cyan); border-color: var(--cyan); color: #06060F; font-weight: 600; }
+
+.form__add { align-self: flex-start; }
+.form__foot { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 6px; }
+.form__errcount { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); }
+.form__legal { font-size: 12.5px; color: var(--dim); max-width: 60ch; }
+
+/* Out of sight and out of the accessibility tree, but still fillable by a bot
+   walking the DOM. Not display:none — some bots skip those. */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.applied {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: clamp(40px, 8vw, 90px) var(--gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.applied__body { color: var(--muted); font-size: var(--text-lede); }
+.applied__row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
+@media (max-width: 900px) {
+  .band { grid-template-columns: minmax(0, 1fr); }
+  .band__right { order: -1; }
+}
+@media (max-width: 680px) {
+  .field-row { grid-template-columns: minmax(0, 1fr); }
+  .offerfields__remove { position: static; align-self: flex-end; margin-top: -28px; }
+}

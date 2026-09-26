@@ -18,17 +18,17 @@ function Done({ onAgain }) {
   return (
     <div className="applied">
       <Asterisk size={26} strokeWidth={1.4} />
-      <h1 className="applied__title">Application received</h1>
+      <h1 className="display-h2">Application received</h1>
       <p className="applied__body">
         Every application is read by a person before anything goes live. If it is a
         fit, we will email you to confirm the details and agree how your listing
         reads before it is published. Nothing appears publicly until you have seen it.
       </p>
       <div className="applied__row">
-        <Pill variant="ink" to="/">
+        <Pill variant="amber" to="/">
           Back to the site
         </Pill>
-        <Pill variant="outline" onClick={onAgain}>
+        <Pill variant="ghost" onClick={onAgain}>
           Submit another
         </Pill>
       </div>
@@ -101,15 +101,15 @@ export default function ListYourNetwork() {
   return (
     <main className="page page--form">
       <div className="formwrap">
-        <Link className="formwrap__back label" to="/">
+        <Link className="formwrap__back" to="/">
           ← {CONFIG.NAME}
         </Link>
 
         <header className="formhead">
-          <span className="label">
+          <span className="eyebrow">
             <Asterisk size={10} /> List your network
           </span>
-          <h1 className="formhead__title">
+          <h1 className="display-h2">
             Who can you reach that <em>nobody else</em> can?
           </h1>
           <p className="formhead__lede">
@@ -131,7 +131,7 @@ export default function ListYourNetwork() {
 
         <form className="form" onSubmit={onSubmit} noValidate>
           <fieldset className="offerfields">
-            <legend className="offerfields__legend label">
+            <legend className="offerfields__legend">
               <Asterisk size={10} /> You
             </legend>
 
@@ -159,7 +159,7 @@ export default function ListYourNetwork() {
                   onChange={(e) => setApp({ ...app, email: e.target.value })}
                   autoComplete="email"
                 />
-                <span className="field__hint label">
+                <span className="field__hint">
                   Never published. It is how we reach you about the listing.
                 </span>
                 {errors.email && <span className="field__err">{errors.email}</span>}
@@ -208,7 +208,7 @@ export default function ListYourNetwork() {
           {errors.offers && <span className="field__err">{errors.offers}</span>}
 
           {app.offers.length < LIMITS.maxOffers && (
-            <Pill variant="outline" onClick={addOffer} className="form__add">
+            <Pill variant="ghost" onClick={addOffer} className="form__add">
               <Asterisk size={11} />
               Add another network
             </Pill>
@@ -237,7 +237,7 @@ export default function ListYourNetwork() {
 
           <div className="form__foot">
             <Pill
-              variant="ink"
+              variant="amber"
               onClick={onSubmit}
               disabled={!live || busy}
               disabledReason={!live ? 'The intake is not live yet' : null}
@@ -247,7 +247,7 @@ export default function ListYourNetwork() {
             </Pill>
 
             {touched && Object.keys(errors).length > 0 && (
-              <span className="form__errcount label">
+              <span className="form__errcount">
                 {Object.keys(errors).length} field
                 {Object.keys(errors).length === 1 ? '' : 's'} need attention
               </span>
