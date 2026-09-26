@@ -53,7 +53,7 @@
 
 /* Grid blow-out guard. A long unbroken string in any grid child forces its
    track wider than the viewport and the whole page scrolls sideways. */
-.stats-grid > *, .roster > *, .tier-grid > *, .steps > *, .netgrid > * { min-width: 0; }
+.stats-grid > *, .floor-grid > *, .tier-grid > *, .steps > *, .netgrid > * { min-width: 0; }
 
 .eyebrow {
   display: inline-flex;
@@ -341,8 +341,43 @@
 .stat-tile__value--none { color: var(--dim); }
 .stat-tile__hint { margin-top: 6px; font-size: 12px; color: var(--dim); }
 
-/* ── The roster ─────────────────────────────────────────────────────────── */
-.roster { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 14px; }
+/* ── Filters ────────────────────────────────────────────────────────────── */
+/* Shown greyed rather than hidden. Seeing the real controls tells a visitor what
+   browsing will look like far better than an absence does. */
+.filters { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+.filters__row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.filters__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+  min-width: 62px;
+}
+.filters__chip { background: transparent; cursor: pointer; font-family: var(--font-mono); }
+.filters__chip:disabled { opacity: 0.4; cursor: not-allowed; }
+.filters__chip:not(:disabled):hover { border-color: var(--cyan); color: var(--cyan); }
+.filters__chip.is-more { opacity: 0.4; }
+
+/* ── The empty floor ────────────────────────────────────────────────────── */
+.floor-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: clamp(28px, 5vw, 52px);
+}
+.floor-empty__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  letter-spacing: -0.02em;
+}
+.floor-empty__body { font-size: 14px; color: var(--muted); max-width: 56ch; }
+.floor-empty__row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; margin-top: 8px; }
+
+/* ── The floor — the buy side ───────────────────────────────────────────── */
+.floor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 14px; }
 
 .ncard {
   display: flex;
@@ -524,7 +559,7 @@
 }
 @media (max-width: 520px) {
   /* Two columns, not one — the shelf metaphor survives on a phone. */
-  .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .floor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .slot { min-height: 140px; padding: 14px; }
 }
 

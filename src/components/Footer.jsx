@@ -26,7 +26,7 @@ export default function Footer() {
         </div>
 
         <div className="footer__links">
-          <a href="#roster">The roster</a>
+          <a href="#floor">Find a network</a>
           <a href="#tiers">Tiers</a>
           <a href="#how">How it works</a>
           {socials.map(([key, href]) => (

@@ -61,7 +61,7 @@ export const CONFIG = {
   // Counts render ONLY when a real backend has counted them. Until then the hero
   // proof pill shows MECHANIC_LINE instead of a number: same pill, same corner,
   // same weight, no invented traction.
-  LISTER_COUNT: null,       // null → the roster shows numbered unclaimed slots
+  LISTER_COUNT: null,       // null → the floor shows its empty state, never a 0
   INTRO_COUNT: null,        // null → the stat tile shows an em-dash, never a 0
   WAITLIST_COUNT: null,     // null → "join the open call", with no count
   PROOF_AVATARS: [],        // [] → AvatarStack renders 3 dashed vacancy rings

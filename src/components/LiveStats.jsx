@@ -41,7 +41,7 @@ export default function LiveStats() {
             <Tile
               label="Networks open"
               value={listers}
-              hint={listers ? 'live on the roster' : 'the roster opens with the first listing'}
+              hint={listers ? 'live on the floor now' : 'the floor fills with the first launch'}
             />
             <Tile
               label="Introductions made"
@@ -68,8 +68,8 @@ export default function LiveStats() {
   )
 }
 
-/* Exported for the roster's own use so the two cannot disagree about what
-   "open" means. */
+/* Exported so the floor and the stat row cannot disagree about what "open"
+   means. */
 export function hasListings() {
   return typeof CONFIG.LISTER_COUNT === 'number' && CONFIG.LISTER_COUNT > 0
 }

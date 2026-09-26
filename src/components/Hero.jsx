@@ -49,10 +49,10 @@ export default function Hero() {
               <Link className="btn btn--amber" to={intake.to}>
                 Launch your network
               </Link>
-              {/* Points at the roster, not the explainer — "find your network"
-                  promises the market itself, and landing on a how-it-works
-                  section instead would be a bait. */}
-              <a className="btn btn--ghost" href="#roster">
+              {/* The BUY side. "Find your network" promises the market itself,
+                  so it lands on the floor — not the explainer, and not the
+                  listing form, which is the other side of the trade. */}
+              <a className="btn btn--ghost" href="#floor">
                 Find your network ↓
               </a>
             </div>

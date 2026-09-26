@@ -5,7 +5,7 @@ import { CONFIG } from '../config.js'
 import { intakeTarget } from '../lib/intake.js'
 
 const LINKS = [
-  { id: 'roster', label: 'The roster', href: '#roster' },
+  { id: 'floor', label: 'Find a network', href: '#floor' },
   { id: 'tiers', label: 'Tiers', href: '#tiers' },
   { id: 'how', label: 'How it works', href: '#how' },
 ]
